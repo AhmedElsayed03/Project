@@ -1,0 +1,26 @@
+﻿using Project.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Project.Application.Models.DTOs
+{
+    public class ProductsListReadDto
+    {
+        //CLientProduct
+        public DateTime StartDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
+        public int License { get; set; }
+
+        //Product
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public bool IsActive { get; set; } = true;
+
+
+    }
+}
