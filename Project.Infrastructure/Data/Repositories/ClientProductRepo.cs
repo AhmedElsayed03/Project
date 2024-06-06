@@ -20,7 +20,7 @@ namespace Project.Infrastructure.Data.Repositories
         }
 
         // Method for entities with composite keys
-        public async Task<ClientProduct?> GetByCompositeKeyAsync(params object[] keyValues)
+        public ClientProduct? GetByCompositeKeyAsync(params object[] keyValues)
         {
             var entityType = _dbContext.Model.FindEntityType(typeof(ClientProduct));
             var keyProperties = entityType!.FindPrimaryKey()!.Properties;
@@ -39,7 +39,7 @@ namespace Project.Infrastructure.Data.Repositories
                 query = query.Where(e => EF.Property<object>(e, keyProperty.Name).Equals(keyValue));
             }
 
-            return await query.FirstOrDefaultAsync();
+            return query.FirstOrDefault();
         }
     }
 }

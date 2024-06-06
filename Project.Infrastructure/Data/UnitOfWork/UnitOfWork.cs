@@ -30,9 +30,9 @@ namespace Project.Infrastructure.Data.UnitOfWork
   
         }
 
-        public async Task<int> SaveChangesAsync()
+        public int SaveChanges()
         {
-            return await _context.SaveChangesAsync();
+            return _context.SaveChanges();
         }
     }
 }

@@ -12,8 +12,8 @@ using Project.Infrastructure.Data.Context;
 namespace Project.Infrastructure.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    [Migration("20240604152249_Initial")]
-    partial class Initial
+    [Migration("20240606191242_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

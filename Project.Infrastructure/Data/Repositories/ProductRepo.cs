@@ -20,22 +20,23 @@ namespace Project.Infrastructure.Data.Repositories
         }
 
 
-        public async Task<IEnumerable<Product>> GetAll(int page, int countPerPage)
+        public IEnumerable<Product> GetAll(int page, int countPerPage)
         {
-            var products = await _dbContext.Products
+            var products = _dbContext.Products
                            //.Where(i => i.IsActive == true) //Uncomment to get Active Products Only
                            .OrderBy(i => i.Name)
                            .Skip((page - 1) * countPerPage)
                            .Take(countPerPage)
-                           .ToListAsync();
+                           .ToList();
             return products;
         }
 
-        public async Task<int> GetCount()
+        public int GetCount()
         {
-            var productsCount = await _dbContext.Products
-                    .CountAsync();
+            var productsCount = _dbContext.Products.Count();
             return productsCount;
         }
+
+     
     }
 }

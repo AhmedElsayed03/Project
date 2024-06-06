@@ -18,23 +18,23 @@ namespace Project.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ProductPaginationDto> GetAll(int page, int countPerPage)
+        public ProductPaginationDto GetAll(int page, int countPerPage)
         {
-            var products = await _unitOfWork.ProductRepo.GetAll(page, countPerPage);
+            var products = _unitOfWork.ProductRepo.GetAll(page, countPerPage);
             var productsDto = products.Select(i => new ProductReadDto
                 {
                     Name = i.Name,
                     IsActive = i.IsActive
                 });
 
-            int totalCount = await _unitOfWork.ProductRepo.GetCount();
+            int totalCount = _unitOfWork.ProductRepo.GetCount();
 
             return new ProductPaginationDto { Products = productsDto, TotalCount = totalCount };
         }
 
-        public async Task<ProductDetailsReadDto> GetProductDetails(int Id)
+        public ProductDetailsReadDto GetProductDetails(int Id)
         {
-            var product = await _unitOfWork.ProductRepo.GetByIdAsync(Id);
+            var product = _unitOfWork.ProductRepo.GetByID(Id);
 
             return new ProductDetailsReadDto
             {
@@ -54,30 +54,30 @@ namespace Project.Infrastructure.Services
                 IsActive = newProduct.IsActive
             };
 
-            _unitOfWork.ProductRepo.AddAsync(product);
-            _unitOfWork.SaveChangesAsync();
+            _unitOfWork.ProductRepo.Add(product);
+            _unitOfWork.SaveChanges();
         }
 
    
         public void UpdateProduct(ProductUpdateDto productUpdateDto)
         {
 
-            var productToUpdate = _unitOfWork.ProductRepo.GetByIdAsync(productUpdateDto.ProductId).Result!;
+            var productToUpdate = _unitOfWork.ProductRepo.GetByID(productUpdateDto.ProductId);
             productToUpdate.Name = productUpdateDto.Name;
             productToUpdate.Description = productUpdateDto.Description;
             productToUpdate.IsActive = productUpdateDto.IsActive;
 
-            _unitOfWork.SaveChangesAsync();
+            _unitOfWork.SaveChanges();
         }
 
         public void DeleteProduct(int id)
         {
 
-            var ProductToDelete = _unitOfWork.ProductRepo.GetByIdAsync(id);
-            if (ProductToDelete.Result!.ClientProduct.Any() == false) {
+            var ProductToDelete = _unitOfWork.ProductRepo.GetByID(id);
+            if (ProductToDelete.ClientProduct.Any() == false) {
 
-                _unitOfWork.ProductRepo.DeleteAsync(ProductToDelete.Result!);
-                _unitOfWork.SaveChangesAsync();
+                _unitOfWork.ProductRepo.Delete(ProductToDelete);
+                _unitOfWork.SaveChanges();
             }
         }
     }

@@ -7,6 +7,7 @@ using Project.Infrastructure.Data.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +22,9 @@ namespace Project.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<ClientReadDto>> GetAll(int page, int countPerPage)
+        public IEnumerable<ClientReadDto> GetAll(int page, int countPerPage)
         {
-            var Clients = await _unitOfWork.ClientRepo.GetAll(page, countPerPage);
+            var Clients = _unitOfWork.ClientRepo.GetAll(page, countPerPage);
             var clientsDto = Clients.Select(i => new ClientReadDto
                 {
                     Name = i.Name,
@@ -33,9 +34,9 @@ namespace Project.Infrastructure.Services
             return clientsDto;
         }
 
-        public async Task<ClientDetailsReadDto> GetClientDetails(int Id)
+        public ClientDetailsReadDto GetClientDetails(int Id)
         {
-            var client =await _unitOfWork.ClientRepo.GetByIdAsync(Id);
+            var client = _unitOfWork.ClientRepo.GetByID(Id);
 
             return new ClientDetailsReadDto
             {
@@ -46,9 +47,9 @@ namespace Project.Infrastructure.Services
             };
         }
 
-        public async Task<ClientWithProductsDto> GetClientWithProducts(int Id)
+        public ClientWithProductsDto GetClientWithProducts(int Id)
         {
-            var clientWithProducts = await _unitOfWork.ClientRepo.GetClientWithProducts(Id);
+            var clientWithProducts = _unitOfWork.ClientRepo.GetClientWithProducts(Id);
 
             var result = new ClientWithProductsDto
             {
@@ -76,6 +77,7 @@ namespace Project.Infrastructure.Services
 
         public void AddClient(ClientAddDto newClient)
         {
+
             Client client = new Client
             {
                 Name = newClient.Name,
@@ -83,9 +85,9 @@ namespace Project.Infrastructure.Services
                 Class = newClient.Class,
                 State = newClient.State,
             };
-
-            _unitOfWork.ClientRepo.AddAsync(client);
-            _unitOfWork.SaveChangesAsync();
+            Debug.WriteLine($"Client Data: {client}");
+            _unitOfWork.ClientRepo.Add(client);
+            _unitOfWork.SaveChanges();
         }
 
 
@@ -93,17 +95,17 @@ namespace Project.Infrastructure.Services
         public void UpdateClient(ClientUpdateDto clientUpdateDto)
         {
            
-           var clientToUpdate = _unitOfWork.ClientRepo.GetByIdAsync(clientUpdateDto.ClientId).Result!;
-           clientToUpdate.Name = clientUpdateDto.Name;
+           var clientToUpdate = _unitOfWork.ClientRepo.GetByID(clientUpdateDto.ClientId);
+           clientToUpdate!.Name = clientUpdateDto.Name;
 
-           _unitOfWork.SaveChangesAsync();
+           _unitOfWork.SaveChanges();
         }
 
         public void DeleteClient(int id) {
 
-            var clientToDelete = _unitOfWork.ClientRepo.GetByIdAsync(id);
-            _unitOfWork.ClientRepo.DeleteAsync(clientToDelete.Result!);
-            _unitOfWork.SaveChangesAsync();
+            var clientToDelete = _unitOfWork.ClientRepo.GetByID(id);
+            _unitOfWork.ClientRepo.Delete(clientToDelete!);
+            _unitOfWork.SaveChanges();
 
         }
 

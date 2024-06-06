@@ -10,7 +10,7 @@ namespace Project.Application.Abstractions.Repositories
 {
     public interface IClientProductRepo : IGenericRepo<ClientProduct>
     {
-        Task<ClientProduct?> GetByCompositeKeyAsync(params object[] keyValues);
+        ClientProduct? GetByCompositeKeyAsync(params object[] keyValues);
  
     }
 }

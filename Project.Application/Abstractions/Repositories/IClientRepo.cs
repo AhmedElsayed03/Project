@@ -10,8 +10,8 @@ namespace Project.Application.Abstractions.Repositories
 {
     public interface IClientRepo : IGenericRepo<Client>
     {
-        Task<IEnumerable<Client>> GetAll(int page, int countPerPage);
-        Task<Client?> GetClientWithProducts(int id);
+        IEnumerable<Client> GetAll(int page, int countPerPage);
+        Client? GetClientWithProducts(int id);
 
     }
 }

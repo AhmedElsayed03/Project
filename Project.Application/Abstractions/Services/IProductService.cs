@@ -9,8 +9,8 @@ namespace Project.Application.Abstractions.Services
 {
     public interface IProductService
     {
-        Task<ProductPaginationDto> GetAll(int page, int countPerPage);
-        Task<ProductDetailsReadDto> GetProductDetails(int Id);
+        ProductPaginationDto GetAll(int page, int countPerPage);
+        ProductDetailsReadDto GetProductDetails(int Id);
         void AddProduct(ProductAddDto newProduct);
         void UpdateProduct(ProductUpdateDto productUpdateDto);
     }

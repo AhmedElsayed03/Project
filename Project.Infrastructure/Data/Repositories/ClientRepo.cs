@@ -20,20 +20,20 @@ namespace Project.Infrastructure.Data.Repositories
             _dbContext = context;
         }
 
-        public async Task<IEnumerable<Client>> GetAll(int page, int countPerPage)
+        public IEnumerable<Client> GetAll(int page, int countPerPage)
         {
-            var clients = await _dbContext.Clients
+            var clients = _dbContext.Clients
                      //.Where(i => i.State == 0) //Uncomment to get Active Clients Only
                      .OrderBy(i => i.Code)
                      .Skip((page - 1) * countPerPage)
                      .Take(countPerPage)
-                     .ToListAsync();
+                     .ToList();
             return clients;
         }
 
-        public async Task<Client?> GetClientWithProducts(int id)
+        public Client? GetClientWithProducts(int id)
         {
-            var client = await _dbContext.Clients
+            var client = _dbContext.Clients
                     .Where(i => i.Id == id)
                     .Include(i => i.ClientProduct)
                         .ThenInclude(i => i.Product)
@@ -48,7 +48,7 @@ namespace Project.Infrastructure.Data.Repositories
                         .OrderBy(c => c.Product.Name)
                         .ToList()
                     })
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefault();
             return client;
         }
     }

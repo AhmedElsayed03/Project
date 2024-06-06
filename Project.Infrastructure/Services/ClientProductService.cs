@@ -21,10 +21,10 @@ namespace Project.Infrastructure.Services
 
         public void AddClientProduct(ClientProductAddDto newclientProductAdd)
         {
-            var isActive = _unitOfWork.ProductRepo.GetByIdAsync(newclientProductAdd.ProductId).Result!.IsActive;
+            var isActive = _unitOfWork.ProductRepo.GetByID(newclientProductAdd.ProductId)!.IsActive;
             if (isActive == true)
             {
-                _unitOfWork.ClientProductRepo.AddAsync(new ClientProduct
+                _unitOfWork.ClientProductRepo.Add(new ClientProduct
                 {
                     StartDate = newclientProductAdd.StartDate,
                     EndDate = newclientProductAdd.EndDate,
@@ -33,29 +33,29 @@ namespace Project.Infrastructure.Services
                     ProductId = newclientProductAdd.ProductId
                 });
             }
-            _unitOfWork.SaveChangesAsync();
+            _unitOfWork.SaveChanges();
         }
 
         public void UpdateClientProduct(clientProductUpdateDto clientProductUpdateDto)
         {
 
-            var clientProductToUpdate = _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(clientProductUpdateDto.ProductId, clientProductUpdateDto.ClientId).Result!;
+            var clientProductToUpdate = _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(clientProductUpdateDto.ProductId, clientProductUpdateDto.ClientId);
             clientProductToUpdate.StartDate = clientProductUpdateDto.StartDate;
             clientProductToUpdate.EndDate = clientProductUpdateDto.EndDate;
             clientProductToUpdate.License = clientProductUpdateDto.License;
             clientProductToUpdate.ClientId = clientProductUpdateDto.ClientId;
             clientProductToUpdate.ProductId = clientProductUpdateDto.ProductId;
 
-            _unitOfWork.SaveChangesAsync();
+            _unitOfWork.SaveChanges();
         }
 
 
         public void DeleteClientProduct(int productId, int clientId)
         {
 
-            var clientProductToDelete = _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(productId, clientId).Result!;
-            _unitOfWork.ClientProductRepo.DeleteAsync(clientProductToDelete);
-            _unitOfWork.SaveChangesAsync();
+            var clientProductToDelete = _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(productId, clientId);
+            _unitOfWork.ClientProductRepo.Delete(clientProductToDelete);
+            _unitOfWork.SaveChanges();
         }
     }
 }
