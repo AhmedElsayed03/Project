@@ -36,7 +36,7 @@ namespace Project.Infrastructure.Services
 
             return clientsDto;
         }
-
+        
         public ClientDetailsReadDto GetClientDetails(int Id)
         {
             var client = _unitOfWork.ClientRepo.GetByID(Id);
@@ -99,7 +99,9 @@ namespace Project.Infrastructure.Services
         {
            
            var clientToUpdate = _unitOfWork.ClientRepo.GetByID(clientUpdateDto.ClientId);
-           clientToUpdate!.Name = clientUpdateDto.Name;
+            clientToUpdate!.Name = clientUpdateDto.Name;
+            clientToUpdate.State = (State)clientUpdateDto.State;
+            clientToUpdate.Class = (Class)clientUpdateDto.Class;
 
            _unitOfWork.SaveChanges();
         }
@@ -114,7 +116,7 @@ namespace Project.Infrastructure.Services
 
         public int GetClientCount()
         {
-            return _unitOfWork.ClientRepo.ClientsCount();
+            return _unitOfWork.ClientRepo.GetCount();
         }
 
 

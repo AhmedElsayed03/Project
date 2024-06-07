@@ -2,7 +2,14 @@
 @model Project.Presentation.Pages.Clients.ReadClientsModel
 @{
 }
-
+<style>
+    #pag {
+        position: fixed;
+        bottom: 80px;
+        left: 0;
+        width: 100%;
+    }
+</style>
 <h1>Clients List</h1>
 
 <table class="table">
@@ -13,6 +20,7 @@
             <th>Code</th>
             <th>Class</th>
             <th>State</th>
+            <th>Edit</th>
 
         </tr>
     </thead>
@@ -24,16 +32,21 @@
                 <td>@client.Code</td>
                 <td>@client.Class</td>
                 <td>@client.State</td>
+                <td><button class="btn btn-primary">Update</button></td>
             </tr>
         }
     </tbody>
 </table>
 
 
-<div class="pagination">
+<div class="d-flex justify-content-center" id="pag">
     @foreach (var pageNumber in Model.PageNumbers)
     {
         <a href="?pageNumber=@pageNumber" class="btn @((pageNumber == Model.CurrentPage) ? "btn-primary" : "btn-outline-primary")">@pageNumber</a>
+        @if (pageNumber != Model.PageNumbers.Last()) // Add space if it's not the last element
+        {
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        }
     }
 </div>
 

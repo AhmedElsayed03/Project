@@ -52,7 +52,7 @@ namespace Project.Infrastructure.Data.Repositories
             return client;
         }
 
-        public int ClientsCount()
+        public int GetCount()
         {
             return _dbContext.Set<Client>().AsNoTracking().Count();
         }

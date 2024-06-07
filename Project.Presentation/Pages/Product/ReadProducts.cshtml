@@ -1,0 +1,37 @@
+﻿@page
+@model Project.Presentation.Pages.Product.ReadProductsModel
+@{
+}
+
+<h1>Products List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>Name</th>
+            <th>Description</th>
+            <th>IsActive</th>
+         
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Product in Model.ProductsList)
+        {
+            <tr>
+                <td>@Product.Name</td>
+                <td>@Product.Description</td>
+                <td>@Product.IsActive</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="pagination">
+    @foreach (var pageNumber in Model.PageNumbers)
+    {
+        <a href="?pageNumber=@pageNumber" class="btn @((pageNumber == Model.CurrentPage) ? "btn-primary" : "btn-outline-primary")">@pageNumber</a>
+    }
+</div>

@@ -24,7 +24,9 @@ namespace Project.Infrastructure.Services
             var productsDto = products.Select(i => new ProductReadDto
                 {
                     Name = i.Name,
-                    IsActive = i.IsActive
+                    IsActive = i.IsActive,
+                    Description = i.Description,
+
                 });
 
             int totalCount = _unitOfWork.ProductRepo.GetCount();

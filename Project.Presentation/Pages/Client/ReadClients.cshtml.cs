@@ -23,12 +23,6 @@ namespace Project.Presentation.Pages.Clients
             int totalPages = (int)Math.Ceiling((double)allClientsCount / elementsPerPage);
             PageNumbers = Enumerable.Range(1, totalPages).ToList();
             CurrentPage = pageNumber;
-
-            //CurrentPage = pageNumber;
-            //var allClients = _clientService.GetAll(pageNumber, elementsPerPage).ToList();
-            //Clients = allClients.Take(elementsPerPage).ToList();
-            //var totalPages = (int)Math.Ceiling((double)allClients.Count() / elementsPerPage);
-            //PageNumbers = Enumerable.Range(1, totalPages).ToList();
         }
     }
 }
