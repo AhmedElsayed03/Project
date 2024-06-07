@@ -3,6 +3,7 @@ using Project.Application.Abstractions.Services;
 using Project.Application.Abstractions.UnitOfWork;
 using Project.Application.Models.DTOs;
 using Project.Domain.Entities;
+using Project.Domain.Enums;
 using Project.Infrastructure.Data.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace Project.Infrastructure.Services
                 {
                     Name = i.Name,
                     State = i.State,
+                    Class = i.Class,
+                    Code = i.Code,
                 });
 
             return clientsDto;
@@ -82,8 +85,8 @@ namespace Project.Infrastructure.Services
             {
                 Name = newClient.Name,
                 Code = newClient.Code,
-                Class = newClient.Class,
-                State = newClient.State,
+                Class = (Class)newClient.Class,
+                State = State.Pending
             };
             Debug.WriteLine($"Client Data: {client}");
             _unitOfWork.ClientRepo.Add(client);
@@ -109,5 +112,11 @@ namespace Project.Infrastructure.Services
 
         }
 
-}
+        public int GetClientCount()
+        {
+            return _unitOfWork.ClientRepo.ClientsCount();
+        }
+
+
+    }
 }

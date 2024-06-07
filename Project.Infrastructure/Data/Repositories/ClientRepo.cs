@@ -51,5 +51,10 @@ namespace Project.Infrastructure.Data.Repositories
                     .FirstOrDefault();
             return client;
         }
+
+        public int ClientsCount()
+        {
+            return _dbContext.Set<Client>().AsNoTracking().Count();
+        }
     }
 }

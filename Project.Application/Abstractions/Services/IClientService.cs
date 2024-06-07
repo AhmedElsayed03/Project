@@ -13,6 +13,7 @@ namespace Project.Application.Abstractions.Services
         ClientDetailsReadDto GetClientDetails(int Id);
         void AddClient(ClientAddDto newclient);
         ClientWithProductsDto GetClientWithProducts(int Id);
+        int GetClientCount();
         void UpdateClient(ClientUpdateDto clientUpdateDto);
         void DeleteClient(int id);
 

@@ -12,6 +12,7 @@ namespace Project.Application.Abstractions.Repositories
     {
         IEnumerable<Client> GetAll(int page, int countPerPage);
         Client? GetClientWithProducts(int id);
+        int ClientsCount();
 
     }
 }

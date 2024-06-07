@@ -1,0 +1,27 @@
+﻿@page
+@using Project.Application.Models.DTOs
+@model Project.Presentation.Pages.Clients.AddClientModel
+@{
+}
+
+
+<h1>Register Client</h1>
+
+<form asp-action="Add" method="post">
+
+    <div class="form-group">
+    <label asp-for="clientAddDto.Name">Name</label>
+    <input class="form-control" type="text" asp-for="clientAddDto.Name" placeholder="Enter your name" />
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="clientAddDto.Class" class="control-label"></label>
+        <select asp-for="clientAddDto.Class" class="form-control" asp-items="Html.GetEnumSelectList<ClassEnumViewModel>()"></select>
+        <span asp-validation-for="clientAddDto.Class" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>

@@ -11,6 +11,8 @@ namespace Project.Application.Models.DTOs
     public class ClientReadDto
     {
         public string Name { get; set; } = string.Empty;
+        public int Code { get; set; }
+        public Class Class { get; set; }
         public State State { get; set; }
     }
 }

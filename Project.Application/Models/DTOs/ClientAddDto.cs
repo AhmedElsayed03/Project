@@ -12,7 +12,6 @@ namespace Project.Application.Models.DTOs
     {
         public int Code { get; set; }
         public string Name { get; set; } = string.Empty;
-        public Class Class { get; set; }
-        public State State { get; set; }
+        public ClassEnumViewModel Class { get; set; }
     }
 }

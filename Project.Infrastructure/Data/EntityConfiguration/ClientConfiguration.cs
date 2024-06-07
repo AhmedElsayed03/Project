@@ -24,7 +24,8 @@ namespace Project.Infrastructure.Data.EntityConfiguration
                    .IsUnique();
 
 
-            builder.HasAlternateKey(i => i.Code); //For Adding Unique Contraint
+            builder.HasIndex(i => i.Code)
+                   .IsUnique();//For Adding Unique Constraint
 
 
 

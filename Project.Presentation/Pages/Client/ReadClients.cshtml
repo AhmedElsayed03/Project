@@ -1,0 +1,53 @@
+﻿@page "{pageNumber:int?}/{elementsPerPage:int?}"
+@model Project.Presentation.Pages.Clients.ReadClientsModel
+@{
+}
+
+<h1>Clients List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>Name</th>
+            <th>Code</th>
+            <th>Class</th>
+            <th>State</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model.Clients)
+        {
+            <tr>
+                <td>@client.Name</td>
+                <td>@client.Code</td>
+                <td>@client.Class</td>
+                <td>@client.State</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="pagination">
+    @foreach (var pageNumber in Model.PageNumbers)
+    {
+        <a href="?pageNumber=@pageNumber" class="btn @((pageNumber == Model.CurrentPage) ? "btn-primary" : "btn-outline-primary")">@pageNumber</a>
+    }
+</div>
+
+@* <nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" asp-page="./ClientList" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-elementsPerPage="@Model.ElementsPerPage" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" asp-page="./ClientList" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-elementsPerPage="@Model.ElementsPerPage" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav> *@
