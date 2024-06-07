@@ -28,6 +28,7 @@ namespace Project.Infrastructure.Services
             var Clients = _unitOfWork.ClientRepo.GetAll(page, countPerPage);
             var clientsDto = Clients.Select(i => new ClientReadDto
                 {
+                    Id= i.Id,
                     Name = i.Name,
                     State = i.State,
                     Class = i.Class,
@@ -94,7 +95,7 @@ namespace Project.Infrastructure.Services
         }
 
 
-        //User Can only update his name
+        
         public void UpdateClient(ClientUpdateDto clientUpdateDto)
         {
            

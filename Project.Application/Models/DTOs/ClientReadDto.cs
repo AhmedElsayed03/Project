@@ -10,6 +10,8 @@ namespace Project.Application.Models.DTOs
 {
     public class ClientReadDto
     {
+
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int Code { get; set; }
         public Class Class { get; set; }

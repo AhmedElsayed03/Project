@@ -1,4 +1,35 @@
-﻿@page
+﻿@page "{id:int}"
 @model Project.Presentation.Pages.Clients.DeleteClientModel
-@{
-}
+
+<h2>Delete Client</h2>
+
+<h3>Are you sure you want to delete this client?</h3>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClientUpdateDto!.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClientUpdateDto!.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClientUpdateDto!.Class)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClientUpdateDto!.Class)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClientUpdateDto!.State)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClientUpdateDto!.State)
+        </dd>
+    </dl>
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="ClientUpdateDto!.ClientId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-page="./ReadClients" class="btn btn-secondary">Cancel</a>
+</form>
