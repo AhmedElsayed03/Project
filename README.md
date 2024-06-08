@@ -1,7 +1,9 @@
 # E-Commerce Demo using Razor Pages and Clean Architecture
 
 Welcome to the E-Commerce demo project showcasing the usage of Razor Pages and Clean Architecture. This project facilitates managing clients, products, and their relationships using a structured architectural approach.
+## Disclaimer
 
+This project has two branches, main branch is a code without using asynchronous and the other branch (async) is a code using asynchronous.
 ## Entities
 
 1. **Client**: Represents a customer or user of the system.
