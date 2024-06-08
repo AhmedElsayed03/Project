@@ -1,0 +1,47 @@
+﻿@page "{id:int}"
+@model Project.Presentation.Pages.Client.ClientWithProductsModel
+@{
+    ViewData["Title"] = "Client Products";
+}
+
+<h2>Client Products</h2>
+
+@if (Model.ClientWithProducts != null)
+{
+    <div class="client">
+        <h3>@Model.ClientWithProducts.ClientName (@Model.ClientWithProducts.Code)</h3>
+        <p>Class: @Model.ClientWithProducts.Class</p>
+        <p>State: @Model.ClientWithProducts.State</p>
+
+        <h4>Products:</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>License</th>
+                    <th>Is Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.ClientWithProducts.ClientProduct)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Description</td>
+                        <td>@product.StartDate.ToString("d")</td>
+                        <td>@(product.EndDate.HasValue ? product.EndDate.Value.ToString("d") : "N/A")</td>
+                        <td>@product.License</td>
+                        <td>@(product.IsActive ? "Yes" : "No")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No client found.</p>
+}

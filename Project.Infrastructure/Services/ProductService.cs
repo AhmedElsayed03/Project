@@ -35,6 +35,21 @@ namespace Project.Infrastructure.Services
             return new ProductPaginationDto { Products = productsDto, TotalCount = totalCount };
         }
 
+        public IEnumerable<ProductReadDto> GetAllProducts()
+        {
+            var products = _unitOfWork.ProductRepo.GetAll();
+            var productsDto = products.Select(i => new ProductReadDto
+            {
+                Id= i.Id,
+                Name = i.Name,
+                IsActive = i.IsActive,
+                Description = i.Description,
+
+            });
+
+            return productsDto;
+        }
+
         public ProductDetailsReadDto GetProductDetails(int Id)
         {
             var product = _unitOfWork.ProductRepo.GetByID(Id);

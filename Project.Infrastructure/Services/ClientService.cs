@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using Project.Application.Abstractions.Services;
 using Project.Application.Abstractions.UnitOfWork;
 using Project.Application.Models.DTOs;
@@ -121,6 +122,20 @@ namespace Project.Infrastructure.Services
             return _unitOfWork.ClientRepo.GetCount();
         }
 
+        public IEnumerable<ClientReadDto> GetAllClients()
+        {
+            var Clients = _unitOfWork.ClientRepo.GetAll()
+                                    .OrderBy(i => i.Code);
+            var clientsDto = Clients.Select(i => new ClientReadDto
+            {
+                Id = i.Id,
+                Name = i.Name,
+                State = i.State,
+                Class = i.Class,
+                Code = i.Code,
+            });
 
+            return clientsDto;
+        }
     }
 }

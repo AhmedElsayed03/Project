@@ -26,7 +26,7 @@ namespace Project.Infrastructure.Services
             {
                 _unitOfWork.ClientProductRepo.Add(new ClientProduct
                 {
-                    StartDate = newclientProductAdd.StartDate,
+                    StartDate = DateTime.Now,
                     EndDate = newclientProductAdd.EndDate,
                     License = newclientProductAdd.License,
                     ClientId = newclientProductAdd.ClientId,
@@ -40,7 +40,7 @@ namespace Project.Infrastructure.Services
         {
 
             var clientProductToUpdate = _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(clientProductUpdateDto.ProductId, clientProductUpdateDto.ClientId);
-            clientProductToUpdate.StartDate = clientProductUpdateDto.StartDate;
+            clientProductToUpdate.StartDate = DateTime.Now;
             clientProductToUpdate.EndDate = clientProductUpdateDto.EndDate;
             clientProductToUpdate.License = clientProductUpdateDto.License;
             clientProductToUpdate.ClientId = clientProductUpdateDto.ClientId;

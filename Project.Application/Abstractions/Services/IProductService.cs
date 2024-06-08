@@ -14,5 +14,6 @@ namespace Project.Application.Abstractions.Services
         void AddProduct(ProductAddDto newProduct);
         void UpdateProduct(ProductUpdateDto productUpdateDto);
         void DeleteProduct(int id);
+        IEnumerable<ProductReadDto> GetAllProducts();
     }
 }

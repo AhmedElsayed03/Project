@@ -11,6 +11,8 @@
     }
 </style>
 <h1>Clients List</h1>
+<a class="btn btn-primary" href="/Product/AddClient">Register</a>
+
 
 <table class="table">
     <thead>
@@ -22,6 +24,7 @@
             <th>State</th>
             <th>Edit</th>
             <th>Delete</th>
+            <th>Cart</th>
 
         </tr>
     </thead>
@@ -36,6 +39,7 @@
 
                 <td><a class="btn btn-primary" href="/client/UpdateClient/@client.Id">Update</a></td>
                 <td><a class="btn btn-danger" href="/client/DeleteClient/@client.Id">Delete</a></td>
+                <td><a class="btn btn-dark" href="/Client/clientwithproducts/@client.Id">Cart</a></td>
             </tr>
         }
     </tbody>
