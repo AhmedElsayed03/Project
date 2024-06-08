@@ -13,5 +13,6 @@ namespace Project.Application.Abstractions.Services
         ProductDetailsReadDto GetProductDetails(int Id);
         void AddProduct(ProductAddDto newProduct);
         void UpdateProduct(ProductUpdateDto productUpdateDto);
+        void DeleteProduct(int id);
     }
 }

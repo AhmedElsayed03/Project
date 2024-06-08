@@ -7,24 +7,24 @@
 
 <form method="post">
     <div class="form-group">
-        <label asp-for="ClientUpdateDto.ClientId"></label>
-        <input asp-for="ClientUpdateDto.ClientId" class="form-control" readonly />
-        <span asp-validation-for="ClientUpdateDto.ClientId" class="text-danger"></span>
+        <label asp-for="ClientUpdateDto!.ClientId"></label>
+        <input asp-for="ClientUpdateDto!.ClientId" class="form-control" readonly />
+        <span asp-validation-for="ClientUpdateDto!.ClientId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ClientUpdateDto.Name"></label>
-        <input asp-for="ClientUpdateDto.Name" class="form-control" />
-        <span asp-validation-for="ClientUpdateDto.Name" class="text-danger"></span>
+        <label asp-for="ClientUpdateDto!.Name"></label>
+        <input asp-for="ClientUpdateDto!.Name" class="form-control" />
+        <span asp-validation-for="ClientUpdateDto!.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ClientUpdateDto.Class" class="control-label"></label>
-        <select asp-for="ClientUpdateDto.Class" class="form-control" asp-items="Html.GetEnumSelectList<ClassEnumViewModel>()"></select>
-        <span asp-validation-for="ClientUpdateDto.Class" class="text-danger"></span>
+        <label asp-for="ClientUpdateDto!.Class" class="control-label"></label>
+        <select asp-for="ClientUpdateDto!.Class" class="form-control" asp-items="Html.GetEnumSelectList<ClassEnumViewModel>()"></select>
+        <span asp-validation-for="ClientUpdateDto!.Class" class="text-danger"></span>
     </div>
         <div class="form-group">
-        <label asp-for="ClientUpdateDto.State" class="control-label"></label>
-        <select asp-for="ClientUpdateDto.State" class="form-control" asp-items="Html.GetEnumSelectList<StateEnumViewModel>()"></select>
-        <span asp-validation-for="ClientUpdateDto.State" class="text-danger"></span>
+        <label asp-for="ClientUpdateDto!.State" class="control-label"></label>
+        <select asp-for="ClientUpdateDto!.State" class="form-control" asp-items="Html.GetEnumSelectList<StateEnumViewModel>()"></select>
+        <span asp-validation-for="ClientUpdateDto!.State" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Update</button>

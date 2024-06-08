@@ -23,6 +23,7 @@ namespace Project.Infrastructure.Services
             var products = _unitOfWork.ProductRepo.GetAll(page, countPerPage);
             var productsDto = products.Select(i => new ProductReadDto
                 {
+                    Id = i.Id,
                     Name = i.Name,
                     IsActive = i.IsActive,
                     Description = i.Description,
@@ -40,6 +41,7 @@ namespace Project.Infrastructure.Services
 
             return new ProductDetailsReadDto
             {
+                
                 Name = product!.Name,
                 Description = product.Description,
                 IsActive = product.IsActive
@@ -76,11 +78,11 @@ namespace Project.Infrastructure.Services
         {
 
             var ProductToDelete = _unitOfWork.ProductRepo.GetByID(id);
-            if (ProductToDelete.ClientProduct.Any() == false) {
+            //if (ProductToDelete.ClientProduct.Any() == false) {
 
-                _unitOfWork.ProductRepo.Delete(ProductToDelete);
+                _unitOfWork.ProductRepo.Delete(ProductToDelete!);
                 _unitOfWork.SaveChanges();
-            }
+            //}
         }
     }
 }

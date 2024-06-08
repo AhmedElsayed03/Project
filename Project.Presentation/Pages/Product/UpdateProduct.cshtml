@@ -1,4 +1,33 @@
-﻿@page
+﻿@page "{id:int}"
 @model Project.Presentation.Pages.Product.UpdateProductModel
 @{
 }
+
+<h1>Update product</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="productUpdateDto!.ProductId"></label>
+        <input asp-for="productUpdateDto!.ProductId" class="form-control" readonly />
+        <span asp-validation-for="productUpdateDto!.ProductId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="productUpdateDto!.Name"></label>
+        <input asp-for="productUpdateDto!.Name" class="form-control" />
+        <span asp-validation-for="productUpdateDto!.Name" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="productUpdateDto!.Description"></label>
+        <input asp-for="productUpdateDto!.Description" class="form-control" />
+        <span asp-validation-for="productUpdateDto!.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="productUpdateDto!.IsActive"></label>
+        <input asp-for="productUpdateDto!.IsActive" class="form-control" />
+        <span asp-validation-for="productUpdateDto!.IsActive" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

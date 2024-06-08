@@ -1,8 +1,15 @@
-﻿@page
+﻿@page "{pageNumber:int?}/{elementsPerPage:int?}"
 @model Project.Presentation.Pages.Product.ReadProductsModel
 @{
 }
-
+<style>
+    #pag {
+        position: fixed;
+        bottom: 80px;
+        left: 0;
+        width: 100%;
+    }
+</style>
 <h1>Products List</h1>
 
 <table class="table">
@@ -12,6 +19,8 @@
             <th>Name</th>
             <th>Description</th>
             <th>IsActive</th>
+            <th>Update</th>
+            <th>Delete</th>
          
 
         </tr>
@@ -23,15 +32,21 @@
                 <td>@Product.Name</td>
                 <td>@Product.Description</td>
                 <td>@Product.IsActive</td>
+                <td><a class="btn btn-primary" href="/Product/UpdateProduct/@Product.Id">Update</a></td>
+                <td><a class="btn btn-danger" href="/Product/DeleteProduct/@Product.Id">Delete</a></td>
             </tr>
         }
     </tbody>
 </table>
 
 
-<div class="pagination">
+<div class="d-flex justify-content-center" id="pag">
     @foreach (var pageNumber in Model.PageNumbers)
     {
         <a href="?pageNumber=@pageNumber" class="btn @((pageNumber == Model.CurrentPage) ? "btn-primary" : "btn-outline-primary")">@pageNumber</a>
+        @if (pageNumber != Model.PageNumbers.Last())
+        {
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        }
     }
 </div>

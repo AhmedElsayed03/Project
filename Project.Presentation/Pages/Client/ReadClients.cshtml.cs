@@ -16,7 +16,7 @@ namespace Project.Presentation.Pages.Clients
         public List<int> PageNumbers { get; set; }
         public int CurrentPage { get; set; }
 
-        public void OnGet(int pageNumber = 1, int elementsPerPage = 2)
+        public void OnGet(int pageNumber = 1, int elementsPerPage = 3)
         {
             Clients = _clientService.GetAll(pageNumber, elementsPerPage).ToList();
             int allClientsCount = _clientService.GetClientCount();

@@ -25,7 +25,8 @@ namespace Project.Infrastructure.Services
 
         public IEnumerable<ClientReadDto> GetAll(int page, int countPerPage)
         {
-            var Clients = _unitOfWork.ClientRepo.GetAll(page, countPerPage);
+            var Clients = _unitOfWork.ClientRepo.GetAll(page, countPerPage)
+                                                .OrderBy(i => i.Code);
             var clientsDto = Clients.Select(i => new ClientReadDto
                 {
                     Id= i.Id,

@@ -23,8 +23,7 @@ namespace Project.Infrastructure.Data.Repositories
         public IEnumerable<Client> GetAll(int page, int countPerPage)
         {
             var clients = _dbContext.Clients
-                     //.Where(i => i.State == 0) //Uncomment to get Active Clients Only
-                     .OrderBy(i => i.Code)
+                     //.Where(i => i.State == 0)
                      .Skip((page - 1) * countPerPage)
                      .Take(countPerPage)
                      .ToList();
