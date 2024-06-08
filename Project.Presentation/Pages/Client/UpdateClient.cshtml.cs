@@ -17,10 +17,9 @@ namespace Project.Presentation.Pages.Clients
         [BindProperty]
         public ClientUpdateDto? ClientUpdateDto { get; set; }
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-
-            var client = _clientService.GetClientDetails(id);
+            var client = await _clientService.GetClientDetails(id);
 
             if (client == null)
             {
@@ -36,19 +35,18 @@ namespace Project.Presentation.Pages.Clients
             };
 
             return Page();
-
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _clientService.UpdateClient(ClientUpdateDto!);
+            await _clientService.UpdateClient(ClientUpdateDto!);
             return RedirectToPage("./ReadClients");
-
         }
+
     }
 }

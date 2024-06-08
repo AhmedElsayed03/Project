@@ -15,11 +15,10 @@ namespace Project.Presentation.Pages.Clients
         public List<ClientReadDto> Clients { get; set; }
         public List<int> PageNumbers { get; set; }
         public int CurrentPage { get; set; }
-
-        public void OnGet(int pageNumber = 1, int elementsPerPage = 3)
+        public async Task OnGetAsync(int pageNumber = 1, int elementsPerPage = 3)
         {
-            Clients = _clientService.GetAll(pageNumber, elementsPerPage).ToList();
-            int allClientsCount = _clientService.GetClientCount();
+            Clients = (await _clientService.GetAll(pageNumber, elementsPerPage)).ToList();
+            int allClientsCount = await _clientService.GetClientCount();
             int totalPages = (int)Math.Ceiling((double)allClientsCount / elementsPerPage);
             PageNumbers = Enumerable.Range(1, totalPages).ToList();
             CurrentPage = pageNumber;

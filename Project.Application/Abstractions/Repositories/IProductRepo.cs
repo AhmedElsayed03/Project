@@ -9,7 +9,7 @@ namespace Project.Application.Abstractions.Repositories
 {
     public interface IProductRepo : IGenericRepo<Product>
     {
-        IEnumerable<Product> GetAll(int page, int countPerPage);
-        int GetCount();
+        Task<IEnumerable<Product>> GetAll(int page, int countPerPage);
+        Task<int> GetCount();
     }
 }

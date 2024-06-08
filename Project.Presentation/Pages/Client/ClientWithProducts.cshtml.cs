@@ -16,9 +16,9 @@ namespace Project.Presentation.Pages.Client
             _clientService = clientService;
         }
         public ClientWithProductsDto ClientWithProducts { get; set; }
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGet(int id)
         {
-            ClientWithProducts = _clientService.GetClientWithProducts(id);
+            ClientWithProducts = await _clientService.GetClientWithProducts(id);
 
             if (ClientWithProducts == null)
             {

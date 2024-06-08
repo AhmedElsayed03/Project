@@ -18,9 +18,9 @@ namespace Project.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public ProductPaginationDto GetAll(int page, int countPerPage)
+        public async Task<ProductPaginationDto> GetAll(int page, int countPerPage)
         {
-            var products = _unitOfWork.ProductRepo.GetAll(page, countPerPage);
+            var products = await _unitOfWork.ProductRepo.GetAll(page, countPerPage);
             var productsDto = products.Select(i => new ProductReadDto
                 {
                     Id = i.Id,
@@ -30,14 +30,14 @@ namespace Project.Infrastructure.Services
 
                 });
 
-            int totalCount = _unitOfWork.ProductRepo.GetCount();
+            int totalCount = await _unitOfWork.ProductRepo.GetCount();
 
             return new ProductPaginationDto { Products = productsDto, TotalCount = totalCount };
         }
 
-        public IEnumerable<ProductReadDto> GetAllProducts()
+        public async Task<IEnumerable<ProductReadDto>> GetAllProducts()
         {
-            var products = _unitOfWork.ProductRepo.GetAll();
+            var products = await _unitOfWork.ProductRepo.GetAllAsync();
             var productsDto = products.Select(i => new ProductReadDto
             {
                 Id= i.Id,
@@ -50,9 +50,9 @@ namespace Project.Infrastructure.Services
             return productsDto;
         }
 
-        public ProductDetailsReadDto GetProductDetails(int Id)
+        public async Task<ProductDetailsReadDto> GetProductDetails(int Id)
         {
-            var product = _unitOfWork.ProductRepo.GetByID(Id);
+            var product =await _unitOfWork.ProductRepo.GetByIdAsync(Id);
 
             return new ProductDetailsReadDto
             {
@@ -64,7 +64,7 @@ namespace Project.Infrastructure.Services
             };
         }
 
-        public void AddProduct(ProductAddDto newProduct)
+        public async Task AddProduct(ProductAddDto newProduct)
         {
             Product product = new Product
             {
@@ -73,30 +73,30 @@ namespace Project.Infrastructure.Services
                 IsActive = newProduct.IsActive
             };
 
-            _unitOfWork.ProductRepo.Add(product);
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.ProductRepo.AddAsync(product);
+            await _unitOfWork.SaveChangesAsync();
         }
 
    
-        public void UpdateProduct(ProductUpdateDto productUpdateDto)
+        public async Task UpdateProduct(ProductUpdateDto productUpdateDto)
         {
 
-            var productToUpdate = _unitOfWork.ProductRepo.GetByID(productUpdateDto.ProductId);
-            productToUpdate.Name = productUpdateDto.Name;
+            var productToUpdate = await _unitOfWork.ProductRepo.GetByIdAsync(productUpdateDto.ProductId);
+            productToUpdate!.Name = productUpdateDto.Name;
             productToUpdate.Description = productUpdateDto.Description;
             productToUpdate.IsActive = productUpdateDto.IsActive;
 
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChangesAsync();
         }
 
-        public void DeleteProduct(int id)
+        public async Task DeleteProduct(int id)
         {
 
-            var ProductToDelete = _unitOfWork.ProductRepo.GetByID(id);
+            var ProductToDelete = await _unitOfWork.ProductRepo.GetByIdAsync(id);
             //if (ProductToDelete.ClientProduct.Any() == false) {
 
-                _unitOfWork.ProductRepo.Delete(ProductToDelete!);
-                _unitOfWork.SaveChanges();
+                await _unitOfWork.ProductRepo.DeleteAsync(ProductToDelete!);
+                await _unitOfWork.SaveChangesAsync();
             //}
         }
     }

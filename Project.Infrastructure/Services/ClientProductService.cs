@@ -19,12 +19,13 @@ namespace Project.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public void AddClientProduct(ClientProductAddDto newclientProductAdd)
+        public async Task AddClientProduct(ClientProductAddDto newclientProductAdd)
         {
-            var isActive = _unitOfWork.ProductRepo.GetByID(newclientProductAdd.ProductId)!.IsActive;
-            if (isActive == true)
+            var isActive = await _unitOfWork.ProductRepo.GetByIdAsync(newclientProductAdd.ProductId)!;
+            var resultIsActive = isActive!.IsActive;
+            if (resultIsActive == true)
             {
-                _unitOfWork.ClientProductRepo.Add(new ClientProduct
+                await _unitOfWork.ClientProductRepo.AddAsync(new ClientProduct
                 {
                     StartDate = DateTime.Now,
                     EndDate = newclientProductAdd.EndDate,
@@ -33,29 +34,29 @@ namespace Project.Infrastructure.Services
                     ProductId = newclientProductAdd.ProductId
                 });
             }
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChangesAsync();
         }
 
-        public void UpdateClientProduct(clientProductUpdateDto clientProductUpdateDto)
+        public async Task UpdateClientProduct(clientProductUpdateDto clientProductUpdateDto)
         {
 
-            var clientProductToUpdate = _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(clientProductUpdateDto.ProductId, clientProductUpdateDto.ClientId);
+            var clientProductToUpdate = await _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(clientProductUpdateDto.ProductId, clientProductUpdateDto.ClientId);
             clientProductToUpdate.StartDate = DateTime.Now;
             clientProductToUpdate.EndDate = clientProductUpdateDto.EndDate;
             clientProductToUpdate.License = clientProductUpdateDto.License;
             clientProductToUpdate.ClientId = clientProductUpdateDto.ClientId;
             clientProductToUpdate.ProductId = clientProductUpdateDto.ProductId;
 
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChangesAsync();
         }
 
 
-        public void DeleteClientProduct(int productId, int clientId)
+        public async Task DeleteClientProduct(int productId, int clientId)
         {
 
-            var clientProductToDelete = _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(productId, clientId);
-            _unitOfWork.ClientProductRepo.Delete(clientProductToDelete);
-            _unitOfWork.SaveChanges();
+            var clientProductToDelete = await _unitOfWork.ClientProductRepo.GetByCompositeKeyAsync(productId, clientId);
+            await _unitOfWork.ClientProductRepo.DeleteAsync(clientProductToDelete);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

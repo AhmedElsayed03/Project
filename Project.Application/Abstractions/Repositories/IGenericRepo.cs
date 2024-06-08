@@ -8,11 +8,12 @@ namespace Project.Application.Abstractions.Repositories
 {
     public interface IGenericRepo<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T? GetByID(int Id);
-        void Add(T item);
-        void Update(T item);
-        void Delete(T item);
-        int SaveChanges();
+        Task<IReadOnlyList<T>> GetAllAsync();
+        Task<T?> GetByIdAsync(int id);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+
+
     }
 }

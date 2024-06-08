@@ -9,8 +9,8 @@ namespace Project.Application.Abstractions.Services
 {
     public interface IClientProductService
     {
-        void AddClientProduct(ClientProductAddDto newclientProductAdd);
-        void UpdateClientProduct(clientProductUpdateDto clientProductUpdateDto);
-        void DeleteClientProduct(int productId, int clientId);
+        Task AddClientProduct(ClientProductAddDto newclientProductAdd);
+        Task UpdateClientProduct(clientProductUpdateDto clientProductUpdateDto);
+        Task DeleteClientProduct(int productId, int clientId);
     }
 }

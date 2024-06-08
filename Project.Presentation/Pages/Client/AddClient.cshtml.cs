@@ -19,13 +19,14 @@ namespace Project.Presentation.Pages.Clients
         {
         }
 
-        public IActionResult OnPost() {
-
+        public async Task<IActionResult> OnPost()
+        {
             if (ModelState.IsValid == false)
             {
                 return Page();
             }
-            _clientService.AddClient(clientAddDto!);
+
+            await _clientService.AddClient(clientAddDto!);
             return RedirectToPage("./ReadClients");
         }
     }

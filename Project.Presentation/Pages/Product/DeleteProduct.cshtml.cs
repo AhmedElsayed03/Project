@@ -16,10 +16,9 @@ namespace Project.Presentation.Pages.Product
         [BindProperty]
         public ProductUpdateDto? productUpdateDto { get; set; }
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-
-            var product = _productService.GetProductDetails(id);
+            var product = await _productService.GetProductDetails(id);
 
             if (product == null)
             {
@@ -35,19 +34,18 @@ namespace Project.Presentation.Pages.Product
             };
 
             return Page();
-
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _productService.DeleteProduct(productUpdateDto!.ProductId);
+            await _productService.DeleteProduct(productUpdateDto!.ProductId);
             return RedirectToPage("./ReadProducts");
-
         }
+
     }
 }

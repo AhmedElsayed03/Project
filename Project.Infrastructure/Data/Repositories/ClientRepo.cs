@@ -20,19 +20,19 @@ namespace Project.Infrastructure.Data.Repositories
             _dbContext = context;
         }
 
-        public IEnumerable<Client> GetAll(int page, int countPerPage)
+        public async Task<IEnumerable<Client>> GetAll(int page, int countPerPage)
         {
-            var clients = _dbContext.Clients
+            var clients = await _dbContext.Clients
                      //.Where(i => i.State == 0)
                      .Skip((page - 1) * countPerPage)
                      .Take(countPerPage)
-                     .ToList();
+                     .ToListAsync();
             return clients;
         }
 
-        public Client? GetClientWithProducts(int id)
+        public async Task<Client?> GetClientWithProducts(int id)
         {
-            var client = _dbContext.Clients
+            var client = await _dbContext.Clients
                     .Where(i => i.Id == id)
                     .Include(i => i.ClientProduct)
                         .ThenInclude(i => i.Product)
@@ -47,13 +47,13 @@ namespace Project.Infrastructure.Data.Repositories
                         .OrderBy(c => c.Product.Name)
                         .ToList()
                     })
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
             return client;
         }
 
-        public int GetCount()
+        public async Task<int> GetCount()
         {
-            return _dbContext.Set<Client>().AsNoTracking().Count();
+            return await _dbContext.Set<Client>().AsNoTracking().CountAsync();
         }
     }
 }

@@ -18,30 +18,34 @@ namespace Project.Infrastructure.Data.Repositories
         }
 
 
-        public IEnumerable<T> GetAll()
+        public virtual async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            return _dbContext.Set<T>().AsNoTracking();
-        }
-        public T? GetByID(int Id)
-        {
-            return _dbContext.Set<T>().Find(Id);
-        }
-        public void Add(T item)
-        {
-            _dbContext.Set<T>().Add(item);
-        }
-        public void Update(T item)
-        {
-            _dbContext.Set<T>().Update(item);
-        }
-        public void Delete(T item)
-        {
-            _dbContext.Set<T>().Remove(item);
+            return await _dbContext.Set<T>()
+                .ToListAsync();
         }
 
-        public int SaveChanges()
+        public virtual async Task<T?> GetByIdAsync(int id)
         {
-            return _dbContext.SaveChanges();
+            return await _dbContext.Set<T>()
+                .FindAsync(id);
+        }
+
+        public virtual async Task AddAsync(T entity)
+        {
+            await _dbContext.Set<T>()
+                .AddAsync(entity);
+        }
+
+        public virtual Task UpdateAsync(T entity)
+        {
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            return Task.CompletedTask;
+        }
+
+        public virtual Task DeleteAsync(T entity)
+        {
+            _dbContext.Set<T>().Remove(entity);
+            return Task.CompletedTask;
         }
     }
 }

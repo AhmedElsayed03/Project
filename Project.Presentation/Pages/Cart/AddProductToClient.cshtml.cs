@@ -27,43 +27,47 @@ namespace Project.Presentation.Pages.Cart
         public List<SelectListItem> ClientsList { get; set; }
         public List<SelectListItem> ProductsList { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            ClientsList = _clientService.GetAllClients().Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.Name
-            }).ToList();
-
-            ProductsList = _productService.GetAllProducts().Select(p => new SelectListItem
-            {
-                Value = p.Id.ToString(),
-                Text = p.Name
-            }).ToList();
-
-            return Page();
-        }
-
-        public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                ClientsList = _clientService.GetAllClients().Select(c => new SelectListItem
+            ClientsList = (await _clientService.GetAllClients())
+                .Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
                     Text = c.Name
                 }).ToList();
 
-                ProductsList = _productService.GetAllProducts().Select(p => new SelectListItem
+            ProductsList = (await _productService.GetAllProducts())
+                .Select(p => new SelectListItem
                 {
                     Value = p.Id.ToString(),
                     Text = p.Name
                 }).ToList();
 
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                ClientsList = (await _clientService.GetAllClients())
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Id.ToString(),
+                        Text = c.Name
+                    }).ToList();
+
+                ProductsList = (await _productService.GetAllProducts())
+                    .Select(p => new SelectListItem
+                    {
+                        Value = p.Id.ToString(),
+                        Text = p.Name
+                    }).ToList();
+
                 return Page();
             }
 
-            _clientProductService.AddClientProduct(ClientProductAdd);
+            await _clientProductService.AddClientProduct(ClientProductAdd);
 
             return RedirectToPage("/Index");
         }

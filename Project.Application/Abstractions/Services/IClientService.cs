@@ -9,14 +9,14 @@ namespace Project.Application.Abstractions.Services
 {
     public interface IClientService
     {
-        IEnumerable<ClientReadDto> GetAll(int page, int countPerPage);
-        IEnumerable<ClientReadDto> GetAllClients();
-        ClientDetailsReadDto GetClientDetails(int Id);
-        void AddClient(ClientAddDto newclient);
-        ClientWithProductsDto GetClientWithProducts(int Id);
-        int GetClientCount();
-        void UpdateClient(ClientUpdateDto clientUpdateDto);
-        void DeleteClient(int id);
+        Task<IEnumerable<ClientReadDto>> GetAll(int page, int countPerPage);
+        Task<IEnumerable<ClientReadDto>> GetAllClients();
+        Task<ClientDetailsReadDto> GetClientDetails(int Id);
+        Task AddClient(ClientAddDto newclient);
+        Task<ClientWithProductsDto> GetClientWithProducts(int Id);
+        Task<int> GetClientCount();
+        Task UpdateClient(ClientUpdateDto clientUpdateDto);
+        Task DeleteClient(int id);
 
     }
 }

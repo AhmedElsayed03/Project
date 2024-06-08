@@ -1,4 +1,5 @@
-﻿using Project.Application.Abstractions.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.Application.Abstractions.Repositories;
 using Project.Application.Abstractions.UnitOfWork;
 using Project.Infrastructure.Data.Context;
 using System;
@@ -30,9 +31,9 @@ namespace Project.Infrastructure.Data.UnitOfWork
   
         }
 
-        public int SaveChanges()
+        public async Task<int> SaveChangesAsync()
         {
-            return _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
     }
 }

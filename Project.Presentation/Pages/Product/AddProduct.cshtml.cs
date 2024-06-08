@@ -19,14 +19,14 @@ namespace Project.Presentation.Pages.Product
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-
-            if (ModelState.IsValid == false)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
-            _ProductService.AddProduct(productAddDto!);
+
+            await _ProductService.AddProduct(productAddDto!);
             return RedirectToPage("./ReadProducts");
         }
     }

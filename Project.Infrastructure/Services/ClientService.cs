@@ -23,26 +23,30 @@ namespace Project.Infrastructure.Services
         {
             _unitOfWork = unitOfWork;
         }
-
-        public IEnumerable<ClientReadDto> GetAll(int page, int countPerPage)
+        public async Task<IEnumerable<ClientReadDto>> GetAll(int page, int countPerPage)
         {
-            var Clients = _unitOfWork.ClientRepo.GetAll(page, countPerPage)
-                                                .OrderBy(i => i.Code);
-            var clientsDto = Clients.Select(i => new ClientReadDto
-                {
-                    Id= i.Id,
-                    Name = i.Name,
-                    State = i.State,
-                    Class = i.Class,
-                    Code = i.Code,
-                });
+            var clientsQuery = await _unitOfWork.ClientRepo.GetAll(page, countPerPage);
+                                                     
+            var orderedClientsQuery = clientsQuery.OrderBy(c => c.Id);
+            var clients =  orderedClientsQuery.ToList();
+
+            var clientsDto = clients.Select(i => new ClientReadDto
+            {
+                Id = i.Id,
+                Name = i.Name,
+                State = i.State,
+                Class = i.Class,
+                Code = i.Code,
+            });
 
             return clientsDto;
         }
-        
-        public ClientDetailsReadDto GetClientDetails(int Id)
+
+
+
+        public async Task<ClientDetailsReadDto> GetClientDetails(int Id)
         {
-            var client = _unitOfWork.ClientRepo.GetByID(Id);
+            var client = await _unitOfWork.ClientRepo.GetByIdAsync(Id);
 
             return new ClientDetailsReadDto
             {
@@ -53,9 +57,9 @@ namespace Project.Infrastructure.Services
             };
         }
 
-        public ClientWithProductsDto GetClientWithProducts(int Id)
+        public async Task<ClientWithProductsDto> GetClientWithProducts(int Id)
         {
-            var clientWithProducts = _unitOfWork.ClientRepo.GetClientWithProducts(Id);
+            var clientWithProducts = await _unitOfWork.ClientRepo.GetClientWithProducts(Id);
 
             var result = new ClientWithProductsDto
             {
@@ -81,7 +85,7 @@ namespace Project.Infrastructure.Services
             return result;
         }
 
-        public void AddClient(ClientAddDto newClient)
+        public async Task AddClient(ClientAddDto newClient)
         {
 
             Client client = new Client
@@ -92,40 +96,43 @@ namespace Project.Infrastructure.Services
                 State = State.Pending
             };
             Debug.WriteLine($"Client Data: {client}");
-            _unitOfWork.ClientRepo.Add(client);
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.ClientRepo.AddAsync(client);
+            await _unitOfWork.SaveChangesAsync();
         }
 
 
         
-        public void UpdateClient(ClientUpdateDto clientUpdateDto)
+        public async Task UpdateClient(ClientUpdateDto clientUpdateDto)
         {
            
-           var clientToUpdate = _unitOfWork.ClientRepo.GetByID(clientUpdateDto.ClientId);
+           var clientToUpdate =await _unitOfWork.ClientRepo.GetByIdAsync(clientUpdateDto.ClientId);
             clientToUpdate!.Name = clientUpdateDto.Name;
             clientToUpdate.State = (State)clientUpdateDto.State;
             clientToUpdate.Class = (Class)clientUpdateDto.Class;
 
-           _unitOfWork.SaveChanges();
+           await _unitOfWork.SaveChangesAsync();
         }
 
-        public void DeleteClient(int id) {
+        public async Task DeleteClient(int id) {
 
-            var clientToDelete = _unitOfWork.ClientRepo.GetByID(id);
-            _unitOfWork.ClientRepo.Delete(clientToDelete!);
-            _unitOfWork.SaveChanges();
+            var clientToDelete =await _unitOfWork.ClientRepo.GetByIdAsync(id);
+            await _unitOfWork.ClientRepo.DeleteAsync(clientToDelete!);
+            await _unitOfWork.SaveChangesAsync();
 
         }
 
-        public int GetClientCount()
+        public async Task<int> GetClientCount()
         {
-            return _unitOfWork.ClientRepo.GetCount();
+            return await _unitOfWork.ClientRepo.GetCount();
         }
 
-        public IEnumerable<ClientReadDto> GetAllClients()
+        public async Task<IEnumerable<ClientReadDto>> GetAllClients()
         {
-            var Clients = _unitOfWork.ClientRepo.GetAll()
-                                    .OrderBy(i => i.Code);
+            var Clients = await _unitOfWork.ClientRepo.GetAllAsync();
+
+            var orderdClients = Clients.OrderBy(c => c.Id).ToList();
+
+
             var clientsDto = Clients.Select(i => new ClientReadDto
             {
                 Id = i.Id,
